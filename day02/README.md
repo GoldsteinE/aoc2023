@@ -1,4 +1,4 @@
-# Day 02: jq
+# Day 2: jq
 
 The solution is quite compact (shorter than my initial Python implementation).
 
