@@ -19,6 +19,7 @@
             ];
           })
           gcc
+          shellcheck
           # Day 1
           cbqn
         ];
