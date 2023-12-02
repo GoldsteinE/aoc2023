@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - name: Install Nix
+        uses: cachix/install-nix-action@v15
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Cache checker binary
+        id: cache-checker-binary
+        uses: actions/cache@v3
+        with:
+          path: checker/build/checker
+          key: ${{ runner.os }}-${{ hashFiles('checker/Cargo.*') }}-${{ hashFiles('checker/src/*') }}
+      - name: Check tasks
+        run: |
+          echo $AOC_INPUTS_PASSPHRASE > .inputs-passphrase
+          nix develop -c ./decrypt-inputs.sh
+          nix develop -c ./check.sh
+        env:
+          AOC_INPUTS_PASSPHRASE: ${{ secrets.AOC_INPUTS_PASSPHRASE }}
+      - name: Run shellcheck on scripts
+        run: nix develop -c sh -c "find . -name '*.sh' -exec shellcheck {} \\;"
+      
+      
