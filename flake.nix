@@ -5,7 +5,7 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust-overlay, ... }: flake-utils.lib.eachDefaultSystem (system:
+  outputs = { nixpkgs, flake-utils, rust-overlay, ... }: flake-utils.lib.eachDefaultSystem (system:
     let pkgs = (import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; }); in
     {
       devShell = pkgs.mkShell {
@@ -22,6 +22,8 @@
           shellcheck
           # Day 1
           cbqn
+          # Day 2
+          jaq
         ];
       };
     }
