@@ -1,6 +1,6 @@
 # Day 02: jq
 
-Part 2 is suboptimal (traverses turns thrice), but eh, who cares. The solution itself is quite compact.
+The solution is quite compact (shorter than my initial Python implementation).
 
 Script actually uses [jaq] implementation for funsies, but the code is fully jq/jaq compatible.
 
