@@ -24,6 +24,8 @@
           cbqn
           # Day 2
           jaq
+          # Day 3
+          neovim
         ];
       };
     }
