@@ -26,6 +26,8 @@
           jaq
           # Day 3
           neovim
+          # Day 5
+          ocaml
         ];
       };
     }
