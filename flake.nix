@@ -18,8 +18,10 @@
               "rust-analyzer"
             ];
           })
-          gcc
+          # For scripts
           shellcheck
+          # Generally useful
+          gdb
           # Day 1
           cbqn
           # Day 2
@@ -28,6 +30,9 @@
           neovim
           # Day 5
           ocaml
+          # Day 6
+          gcc
+          binutils
         ];
       };
     }
