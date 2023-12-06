@@ -14,7 +14,7 @@ read_input:
 	mov r12, offset buffer
 	mov r13, 128     # buffer size
 .L_read_loop:
-	xor rax, rax     # syscall number = 0 (SYS_READ)
+	xor rax, rax     # syscall number = 0 (read)
 	xor rdi, rdi     # fd = 0 (stdin)
 	mov rsi, r12     # buffer pointer
 	mov rdx, r13     # how many bytes to read
