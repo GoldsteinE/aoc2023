@@ -184,7 +184,7 @@ ways_to_win:
 # type: (times in r14, distances in r15) -> (answer in r8, clobbers everything)
 part1:
     mov r8, 1        # initialize answer
-    mov r9w, 10      # newline (in 16-bit register, because r9 doesn't have 8 bit one)
+    mov r9w, 10      # newline (in 16-bit register, because r9 doesn't have 8-bit one)
 .L_p1_loop:
     call take_race   # take two numbers from buffers...
     call ways_to_win # process them...
