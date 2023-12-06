@@ -68,19 +68,6 @@ split_buffer:
     mov r15, r13     # save the second line
     ret
 
-# type: (buffer in rsi) -> (count in rdx, clobbers rcx)
-# calculate length of the line until `\n`
-line_length:
-    mov rdx, rsi   # initialize second buffer pointer
-    mov ch, 10     # a newline character
-.L_ll_loop:        # l-ll-loop? >_<
-    mov cl, [rdx]  # load a character
-    inc rdx        # move right
-    cmp ch, cl     # if it's not newline
-    jne .L_ll_loop # repeat
-    sub rdx, rsi   # calculate length
-    ret
-
 # type: (number in rax) -> (pointer to buffer in rsi, length in rdx, clobbers rcx, number_buffer)
 # format a decimal number + newline to number_buffer and return pointer + length
 format_number:
