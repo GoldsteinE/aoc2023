@@ -16,10 +16,14 @@ combination([X | Xs], [X | Ys]) :- combination(Xs, Ys).
 % ...or we don't.
 combination([_ | Xs], [Y | Ys]) :- combination(Xs, [Y | Ys]).
 
+is_two_pairs(Hand) :- msort(Hand, [A, B, C, D]), card_eq([A, B]), card_eq([C, D]).
+has_full_house_sorted([A, B, C, D, E]) :- card_eq([A, B, C]), card_eq([D, E]).
+has_full_house_sorted([A, B, C, D, E]) :- card_eq([C, D, E]), card_eq([A, B]).
+
 has_pair(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y]), card_eq([T, Y]).
-has_two_pairs(A, B, C, D, E)  :- permutation([A, B, C, D, E], [T, Y, U, I, _]), card_eq([T, Y]), card_eq([U, I]).
+has_two_pairs(A, B, C, D, E)  :- combination([A, B, C, D, E], Hand), is_two_pairs(Hand).
 has_triple(A, B, C, D, E)     :- combination([A, B, C, D, E], [T, Y, U]), card_eq([T, Y, U]).
-has_full_house(A, B, C, D, E) :- permutation([A, B, C, D, E], [T, Y, U, I, O]), card_eq([T, Y, U]), card_eq([I, O]).
+has_full_house(A, B, C, D, E) :- msort([A, B, C, D, E], Sorted), has_full_house_sorted(Sorted).
 has_four(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y, U, I]), card_eq([T, Y, U, I]).
 has_five(A, B, C, D, E)       :- card_eq([A, B, C, D, E]).
 
