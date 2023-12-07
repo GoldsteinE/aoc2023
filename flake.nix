@@ -33,6 +33,8 @@
           # Day 6
           gcc
           binutils
+          # Day 7
+          swiProlog
         ];
       };
     }
