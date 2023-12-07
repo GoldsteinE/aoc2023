@@ -42,7 +42,7 @@ hand_order((Hand, Bid), ((Points, CardRanks), Bid)) :-
 
 sort_hands(Hands, Res) :-
     maplist(hand_order, Hands, Orders),
-    sort(0, @=<, Orders, Res).
+    msort(Orders, Res).
 
 enumerate([], [], _).
 enumerate([ X | Xs ], [ (Idx, X) | Ys ], Idx) :- enumerate(Xs, Ys, Idx + 1).
