@@ -13,7 +13,7 @@ card_eq(Cards) :- list_to_set(Cards, [_]); % This works for both part 1 and 2.
 combination(_, []).
 % On every step we can either take a value from the list...
 combination([X | Xs], [X | Ys]) :- combination(Xs, Ys).
-% ...or we don't.
+% ...or don't.
 combination([_ | Xs], [Y | Ys]) :- combination(Xs, [Y | Ys]).
 
 is_two_pairs(Hand) :- msort(Hand, [A, B, C, D]), card_eq([A, B]), card_eq([C, D]).
