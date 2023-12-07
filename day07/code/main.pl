@@ -16,25 +16,21 @@ combination([X | Xs], [X | Ys]) :- combination(Xs, Ys).
 % ...or don't.
 combination([_ | Xs], [Y | Ys]) :- combination(Xs, [Y | Ys]).
 
-is_two_pairs(Hand) :- msort(Hand, [A, B, C, D]), card_eq([A, B]), card_eq([C, D]).
+has_group(Hand, Num) :- combination(Hand, Group), length(Group, Num), card_eq(Group).
+has_two_pairs(Hand)  :- combination(Hand, Four), msort(Four, [A, B, C, D]), card_eq([A, B]), card_eq([C, D]).
+
 has_full_house_sorted([A, B, C, D, E]) :- card_eq([A, B, C]), card_eq([D, E]).
 has_full_house_sorted([A, B, C, D, E]) :- card_eq([C, D, E]), card_eq([A, B]).
+has_full_house(Hand) :- msort(Hand, Sorted), has_full_house_sorted(Sorted).
 
-has_pair(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y]), card_eq([T, Y]).
-has_two_pairs(A, B, C, D, E)  :- combination([A, B, C, D, E], Hand), is_two_pairs(Hand).
-has_triple(A, B, C, D, E)     :- combination([A, B, C, D, E], [T, Y, U]), card_eq([T, Y, U]).
-has_full_house(A, B, C, D, E) :- msort([A, B, C, D, E], Sorted), has_full_house_sorted(Sorted).
-has_four(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y, U, I]), card_eq([T, Y, U, I]).
-has_five(A, B, C, D, E)       :- card_eq([A, B, C, D, E]).
-
-hand_rank_points([A, B, C, D, E], Points) :-
-    has_five(A, B, C, D, E)       -> Points = 6;
-    has_four(A, B, C, D, E)       -> Points = 5;
-    has_full_house(A, B, C, D, E) -> Points = 4;
-    has_triple(A, B, C, D, E)     -> Points = 3;
-    has_two_pairs(A, B, C, D, E)  -> Points = 2;
-    has_pair(A, B, C, D, E)       -> Points = 1;
-                                     Points = 0.
+hand_rank_points(Hand, Points) :-
+    card_eq(Hand)        -> Points = 6;
+    has_group(Hand, 4)   -> Points = 5;
+    has_full_house(Hand) -> Points = 4;
+    has_group(Hand, 3)   -> Points = 3;
+    has_two_pairs(Hand)  -> Points = 2;
+    has_group(Hand, 2)   -> Points = 1;
+                            Points = 0.
 
 hand_order((Hand, Bid), ((Points, CardRanks), Bid)) :-
     hand_rank_points(Hand, Points),
