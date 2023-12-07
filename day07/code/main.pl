@@ -9,14 +9,18 @@ card_rank(Chr, N) :- between(0'2, 0'9, Chr), N is Chr - 0'0.
 card_eq(Cards) :- list_to_set(Cards, [_]); % This works for both part 1 and 2.
                   b_getval(aoc_part, 2), list_to_set(Cards, [A, B]), member(0'J, [A, B]).
 
-% Meme-grade implementation performance-wise, but simple and straightforward.
-% A better solution would try combinations instead of permutations, but the standard library
-% doesn't seem to have combinations helper, so oh well.
-has_pair(A, B, C, D, E)       :- permutation([A, B, C, D, E], [T, Y      | _]), card_eq([T, Y]).
+% There're no empty combinations.
+combination(_, []).
+% On every step we can either take a value from the list...
+combination([X | Xs], [X | Ys]) :- combination(Xs, Ys).
+% ...or we don't.
+combination([_ | Xs], [Y | Ys]) :- combination(Xs, [Y | Ys]).
+
+has_pair(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y]), card_eq([T, Y]).
 has_two_pairs(A, B, C, D, E)  :- permutation([A, B, C, D, E], [T, Y, U, I, _]), card_eq([T, Y]), card_eq([U, I]).
-has_triple(A, B, C, D, E)     :- permutation([A, B, C, D, E], [T, Y, U   | _]), card_eq([T, Y, U]).
+has_triple(A, B, C, D, E)     :- combination([A, B, C, D, E], [T, Y, U]), card_eq([T, Y, U]).
 has_full_house(A, B, C, D, E) :- permutation([A, B, C, D, E], [T, Y, U, I, O]), card_eq([T, Y, U]), card_eq([I, O]).
-has_four(A, B, C, D, E)       :- permutation([A, B, C, D, E], [T, Y, U, I, _]), card_eq([T, Y, U, I]).
+has_four(A, B, C, D, E)       :- combination([A, B, C, D, E], [T, Y, U, I]), card_eq([T, Y, U, I]).
 has_five(A, B, C, D, E)       :- card_eq([A, B, C, D, E]).
 
 hand_rank_points([A, B, C, D, E], Points) :-
