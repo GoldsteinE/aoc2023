@@ -35,6 +35,9 @@
           binutils
           # Day 7
           swiProlog
+          # Day 8
+          gmp
+          gnu-cobol.bin
         ];
       };
     }
