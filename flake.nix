@@ -38,6 +38,8 @@
           # Day 8
           gmp
           gnu-cobol.bin
+          # Day 9
+          dash
         ];
       };
     }
