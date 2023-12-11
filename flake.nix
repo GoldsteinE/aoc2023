@@ -40,6 +40,8 @@
           gnu-cobol.bin
           # Day 9
           dash
+          # Day 10
+          php
         ];
       };
     }
