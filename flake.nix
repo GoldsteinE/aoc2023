@@ -42,6 +42,8 @@
           dash
           # Day 10
           php
+          # Day 11
+          gnat
         ];
       };
     }
