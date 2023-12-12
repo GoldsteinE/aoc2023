@@ -44,6 +44,9 @@
           php
           # Day 11
           gnat
+          # Day 12
+          unison-ucm
+          util-linux
         ];
       };
     }
