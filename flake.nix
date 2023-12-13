@@ -47,6 +47,8 @@
           # Day 12
           unison-ucm
           util-linux
+          # Day 13
+          rakudo
         ];
       };
     }
