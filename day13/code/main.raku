@@ -19,7 +19,7 @@ sub who-breaks-reflection(List $row, Int $at) {
 
 sub find-mirrors(Seq $map --> Set[Int]) {
     reduce -> $acc, $row {
-        $acc ∩ set grep { who-breaks-reflection($row, $^a) ≡ set() }, $acc.keys
+        $acc ∩ set $acc.keys.grep: { who-breaks-reflection($row, $_) ≡ set() }
     }, (Set[Int].new: 1 ..^ $map[0].elems), |$map;
 }
 
