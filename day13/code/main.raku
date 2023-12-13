@@ -6,9 +6,7 @@ sub who-breaks-reflection(List $row, Int $at) {
     my $right = $at;
     while $left ≥ 0 && $right < $row.elems {
         if $row[$left] ne $row[$right] {
-            if $res.elems ≠ 0 {
-                return Guard.new;
-            }
+            return Guard.new if $res ≢ set();
             $res = set $left, $right;
         }
         $left--;
