@@ -49,6 +49,8 @@
           util-linux
           # Day 13
           rakudo
+          # Day 14
+          julia
         ];
       };
     }
