@@ -51,6 +51,8 @@
           rakudo
           # Day 14
           julia
+          # Day 15
+          nim
         ];
       };
     }
