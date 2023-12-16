@@ -53,6 +53,8 @@
           julia
           # Day 15
           nim
+          # Day 16
+          elixir
         ];
       };
     }

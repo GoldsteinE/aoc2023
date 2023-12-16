@@ -1,0 +1,6 @@
+%{
+  "arrays": {:hex, :arrays, "2.1.1", "4c495cddeb5d31814a739e79db42d012e62ec033902597b7b930c221cc8a3fca", [:mix], [{:extractable, "~> 1.0", [hex: :extractable, repo: "hexpm", optional: false]}, {:fun_land, "~> 0.10.0", [hex: :fun_land, repo: "hexpm", optional: true]}, {:insertable, "~> 1.0", [hex: :insertable, repo: "hexpm", optional: false]}], "hexpm", "f6c03081303e3240267e048f44f821305100ae824030208131b30ae5a681f33a"},
+  "extractable": {:hex, :extractable, "1.0.1", "2cf2b213cbda82eb578c821de48fa313cddfa7573b256bce4306248f56b44509", [:mix], [{:type_check, "~> 0.8", [hex: :type_check, repo: "hexpm", optional: false]}], "hexpm", "820e9db7550a62c7d63b760a8da51ab2341ba425563955db005baadcb403b046"},
+  "insertable": {:hex, :insertable, "1.0.0", "879c7023b5491bbb694dff78422c94faded616fda963e529916343bc6e35162f", [:mix], [{:type_check, "~> 0.8", [hex: :type_check, repo: "hexpm", optional: false]}], "hexpm", "4b3f60169221a1ace67fdfe8b0d3c35708c098e55df549d4a374b9a7b0255af4"},
+  "type_check": {:hex, :type_check, "0.13.5", "b41ce95808546e9913d7d56d0886ae8298c4298c9ff596fd7987c5000a2d2316", [:mix], [{:credo, "~> 1.5", [hex: :credo, repo: "hexpm", optional: true]}, {:stream_data, "~> 0.5.0", [hex: :stream_data, repo: "hexpm", optional: true]}], "hexpm", "6196910e3cec69b4e2cec71f8d9f243532aeeb37924a86e8256bc5ee05b3fd00"},
+}
