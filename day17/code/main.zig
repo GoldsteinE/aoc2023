@@ -43,10 +43,8 @@ fn toKey(node: Node) usize {
 
 fn shiftInBounds(width: usize, height: usize, x: u8, y: u8, direction: Direction) ?struct { x: u8, y: u8 } {
     const delta = offset(direction);
-    const wx: i16 = x;
-    const wy: i16 = y;
-    const nx = wx + delta.x;
-    const ny = wy + delta.y;
+    const nx = @as(i16, x) + delta.x;
+    const ny = @as(i16, y) + delta.y;
     if (nx < 0 or ny < 0 or nx >= width or ny >= height) {
         return null;
     } else {
