@@ -55,6 +55,8 @@
           nim
           # Day 16
           elixir
+          # Day 17
+          zig
         ];
       };
     }
