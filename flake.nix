@@ -57,7 +57,17 @@
           elixir
           # Day 17
           zig
+          # Day 18
+          factor-lang
         ];
+        shellHook = ''
+        # Why did you name your language the same as one of the coreutils.
+        export PATH="${pkgs.factor-lang}/bin:$PATH"
+        # To work with Factor code.
+        export FACTOR_ROOTS="$(pwd)/day18/code";
+        '';
+        # For scripts.
+        FACTOR_BIN="${pkgs.factor-lang}/bin/factor";
       };
     }
   );
