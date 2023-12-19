@@ -3,11 +3,14 @@ name:               day19
 version:            0.1.0.0
 build-type:         Simple
 
+common extensions
+    default-extensions: MonadComprehensions, OverloadedStrings, ImplicitParams, LambdaCase
+
 common warnings
     ghc-options: -Wall -Wno-unused-matches -Wno-name-shadowing
 
 executable day19
-    import:           warnings
+    import:           warnings, extensions
     main-is:          Main.hs
     other-modules:    Types, Parser
     build-depends:    base ^>=4.17.2.1, text ^>= 2.0, megaparsec ^>= 9.2, containers ^>= 0.6.7, logict ^>= 0.8.1.0, mtl ^>= 2.3.1

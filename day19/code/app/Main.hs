@@ -1,16 +1,16 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ImplicitParams #-}
-
 module Main (main) where
 
-import Data.Map hiding (empty, foldr, filter)
-import System.Exit
-import System.Environment
 import Data.Functor
 import Control.Applicative
 import Control.Monad.Logic
 import Control.Monad.Writer
+
+import Data.Map (Map, (!))
+import qualified Data.Map as M
 import qualified Data.Text as T
+
+import System.Exit (die)
+import System.Environment (getArgs)
 
 import Parser
 import Types
@@ -33,13 +33,13 @@ walkWorkflow (rule:rest) = case rule of
 mergeConditions :: [Condition] -> Map Var Range
 mergeConditions conditions =
   let
-    perVar = fromListWith (<>) $ (\c@(Condition var _ _) -> (var, [c])) <$> conditions
+    perVar = M.fromListWith (<>) $ (\c@(Condition var _ _) -> (var, [c])) <$> conditions
     merged = foldr applyCond fullRange <$> perVar
-    defaults = fromList $ (,fullRange) <$> allVars
-  in merged `union` defaults
+    defaults = M.fromList $ (,fullRange) <$> allVars
+  in merged `M.union` defaults
 
 groupOptions :: Map Var Range -> Int
-groupOptions ranges = product $ (\(_, Range lo hi) -> hi - lo + 1) <$> toList ranges
+groupOptions ranges = product $ (\(_, Range lo hi) -> hi - lo + 1) <$> M.toList ranges
 
 checkPart :: Foldable m => m (Map Var Range) -> Part -> Bool
 checkPart ranges (Part vars) = any check ranges
@@ -50,9 +50,7 @@ main :: IO ()
 main = do
   isPart2 <- getArgs <&> (== ["2"])
   rawInput <- getContents
-  (sys, parts) <- case parseInput (T.pack rawInput) of
-    Right inp -> pure inp
-    Left err -> die err
+  (sys, parts) <- either die pure $ parseInput (T.pack rawInput)
   let conditions = let ?sys = sys in walkWorkflow $ sys ! WorkflowName "in"
   let ranges = mergeConditions <$> execWriterT conditions
   if isPart2 then

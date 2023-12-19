@@ -17,7 +17,7 @@ module Types
   , partScore
   ) where
 
-import Data.Map
+import Data.Map (Map, (!))
 import qualified Data.Text as T
 
 newtype WorkflowName = WorkflowName T.Text deriving (Show, Eq, Ord)
@@ -40,19 +40,17 @@ allVars :: [Var]
 allVars = [X, M, A, S]
 
 flipOp :: Comparison -> Comparison
-flipOp Lt = Ge
-flipOp Gt = Le
-flipOp Le = Gt
-flipOp Ge = Lt
+flipOp = \case { Lt -> Ge; Gt -> Le; Le -> Gt; Ge -> Lt }
 
 flipCond :: Condition -> Condition
 flipCond (Condition var op int) = Condition var (flipOp op) int
 
 applyCond :: Condition -> Range -> Range
-applyCond (Condition _ Lt x) (Range low high) = Range low (high `min` (x - 1))
-applyCond (Condition _ Le x) (Range low high) = Range low (high `min` x)
-applyCond (Condition _ Gt x) (Range low high) = Range (low `max` (x + 1)) high
-applyCond (Condition _ Ge x) (Range low high) = Range (low `max` x) high
+applyCond (Condition _ op x) (Range low high) = case op of
+  Lt -> Range low (high `min` pred x)
+  Le -> Range low (high `min` x)
+  Gt -> Range (low `max` succ x) high
+  Ge -> Range (low `max` x) high
 
 partScore :: Part -> Int
 partScore (Part vars) = sum $ (vars !) <$> allVars
