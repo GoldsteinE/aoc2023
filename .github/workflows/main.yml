@@ -27,7 +27,7 @@ jobs:
         run: |
           echo $AOC_INPUTS_PASSPHRASE > .inputs-passphrase
           nix develop -c ./decrypt-inputs.sh
-          nix develop -c ./check.sh
+          AOC_IN_CI=1 nix develop -c ./check.sh
         env:
           AOC_INPUTS_PASSPHRASE: ${{ secrets.AOC_INPUTS_PASSPHRASE }}
       - name: Run shellcheck on scripts
