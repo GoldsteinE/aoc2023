@@ -42,10 +42,10 @@ conditionalRule = do
 rule :: Parser Rule
 rule = (try conditionalRule) <|> (action <&> Rule Nothing)
 
-workflow :: Parser Workflow
-workflow = (rule `sepBy` char ',') <&> Workflow
+workflow :: Parser [Rule]
+workflow = (rule `sepBy` char ',')
 
-namedWorkflow :: Parser (WorkflowName, Workflow)
+namedWorkflow :: Parser (WorkflowName, [Rule])
 namedWorkflow = liftA2 (,) workflowName (between (char '{') (char '}') workflow)
 
 system :: Parser System

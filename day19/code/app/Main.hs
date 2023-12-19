@@ -24,9 +24,9 @@ checkWorkflow sys@(System wfs) (rule:rest) = case rule of
     Rule Nothing Accept -> pure ()
     Rule (Just cond) Reject -> flipCond cond ->> checkWorkflow sys rest
     Rule (Just cond) Accept -> tell [cond] <|> flipCond cond ->> checkWorkflow sys rest
-    Rule Nothing (Goto workflow) -> let (Workflow rules) = wfs ! workflow in checkWorkflow sys rules
-    Rule (Just cond) (Goto workflow) -> let (Workflow rules) = wfs ! workflow in
-      flipCond cond ->> checkWorkflow sys rest <|> cond ->> checkWorkflow sys rules
+    Rule Nothing (Goto workflow) -> checkWorkflow sys (wfs ! workflow)
+    Rule (Just cond) (Goto workflow) ->
+      flipCond cond ->> checkWorkflow sys rest <|> cond ->> checkWorkflow sys (wfs ! workflow)
   where
     infixl 4 ->>
     x ->> n = tell [x] >> n
@@ -56,8 +56,7 @@ main = do
     Right inp -> pure inp
     Left err -> die err
   let (System wfs) = sys
-  let (Workflow firstWf) = wfs ! WorkflowName "in"
-  let conditions = checkWorkflow sys firstWf
+  let conditions = checkWorkflow sys $ wfs ! WorkflowName "in"
   let ranges = mergeConditions <$> execWriterT conditions
   if isPart2 then
     print . sum $ groupOptions <$> ranges
