@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ImplicitParams #-}
 
 module Main (main) where
 
@@ -14,31 +15,28 @@ import qualified Data.Text as T
 import Parser
 import Types
 
-groupOnKey :: Ord b => (a -> b) -> [a] -> [(b, [a])]
-groupOnKey f = toList . fromListWith (<>) . fmap (\x -> (f x, [x]))
-
-checkWorkflow :: System -> [Rule] -> WriterT [Condition] Logic ()
-checkWorkflow sys [] = pure ()
-checkWorkflow sys@(System wfs) (rule:rest) = case rule of
+walkWorkflow :: (?sys :: System) => [Rule] -> WriterT [Condition] Logic ()
+walkWorkflow [] = pure ()
+walkWorkflow (rule:rest) = case rule of
     Rule Nothing Reject -> empty
     Rule Nothing Accept -> pure ()
-    Rule (Just cond) Reject -> flipCond cond ->> checkWorkflow sys rest
-    Rule (Just cond) Accept -> tell [cond] <|> flipCond cond ->> checkWorkflow sys rest
-    Rule Nothing (Goto workflow) -> checkWorkflow sys (wfs ! workflow)
-    Rule (Just cond) (Goto workflow) ->
-      flipCond cond ->> checkWorkflow sys rest <|> cond ->> checkWorkflow sys (wfs ! workflow)
+    Rule (Just cond) Reject -> flipCond cond ->> walkRest
+    Rule (Just cond) Accept -> tell [cond] <|> flipCond cond ->> walkRest
+    Rule Nothing (Goto next) -> walk next
+    Rule (Just cond) (Goto next) -> cond ->> walk next <|> flipCond cond ->> walkRest
   where
     infixl 4 ->>
     x ->> n = tell [x] >> n
+    walk next = walkWorkflow (?sys ! next)
+    walkRest = walkWorkflow rest
 
 mergeConditions :: [Condition] -> Map Var Range
 mergeConditions conditions =
   let
-    perVar = groupOnKey (\(Condition var _ _) -> var) conditions
-    mergeVarConditions (var, conditions) = (var, foldr applyCond fullRange conditions)
-    merged = fromList $ mergeVarConditions <$> perVar
+    perVar = fromListWith (<>) $ (\c@(Condition var _ _) -> (var, [c])) <$> conditions
+    merged = foldr applyCond fullRange <$> perVar
     defaults = fromList $ (,fullRange) <$> allVars
-  in union merged defaults
+  in merged `union` defaults
 
 groupOptions :: Map Var Range -> Int
 groupOptions ranges = product $ (\(_, Range lo hi) -> hi - lo + 1) <$> toList ranges
@@ -55,8 +53,7 @@ main = do
   (sys, parts) <- case parseInput (T.pack rawInput) of
     Right inp -> pure inp
     Left err -> die err
-  let (System wfs) = sys
-  let conditions = checkWorkflow sys $ wfs ! WorkflowName "in"
+  let conditions = let ?sys = sys in walkWorkflow $ sys ! WorkflowName "in"
   let ranges = mergeConditions <$> execWriterT conditions
   if isPart2 then
     print . sum $ groupOptions <$> ranges

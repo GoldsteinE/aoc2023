@@ -49,7 +49,7 @@ namedWorkflow :: Parser (WorkflowName, [Rule])
 namedWorkflow = liftA2 (,) workflowName (between (char '{') (char '}') workflow)
 
 system :: Parser System
-system = namedWorkflow `sepEndBy` eol <&> System . M.fromList
+system = namedWorkflow `sepEndBy` eol <&> M.fromList
 
 partField :: Parser (Var, Int)
 partField = do

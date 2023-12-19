@@ -5,7 +5,7 @@ module Types
   , Condition(..)
   , Action(..)
   , Rule(..)
-  , System(..)
+  , System
   , Part(..)
   , Range(..)
   , fullRange
@@ -26,7 +26,7 @@ data Comparison = Lt | Gt | Le | Ge deriving Show
 data Condition = Condition Var Comparison Int deriving Show
 data Action = Accept | Reject | Goto WorkflowName deriving Show
 data Rule = Rule (Maybe Condition) Action deriving Show
-newtype System = System (Map WorkflowName [Rule]) deriving Show
+type System = (Map WorkflowName [Rule])
 newtype Part = Part (Map Var Int) deriving Show
 data Range = Range Int Int deriving Show
 
