@@ -59,6 +59,9 @@
           zig
           # Day 18
           factor-lang
+          # Day 19
+          ghc
+          cabal-install
         ];
         shellHook = ''
         # Why did you name your language the same as one of the coreutils.
