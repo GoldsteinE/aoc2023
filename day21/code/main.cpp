@@ -5,12 +5,14 @@
 #include <utility>
 #include <iostream>
 #include <stdexcept>
-#include <boost/container/flat_set.hpp>
+#include <boost/functional/hash.hpp>
+#include <boost/unordered/unordered_flat_set.hpp>
 
-using boost::container::flat_set;
+template<class T> using set = boost::unordered_flat_set<T, std::hash<T>>;
 
 auto rem(auto x, auto y) {
-    return (x % y + y) % y;
+    auto mod = x % y;
+    return mod < 0 ? mod + y : mod;
 }
 
 struct point {
@@ -22,6 +24,15 @@ struct point {
     void operator+=(const point& other) {
         x += other.x;
         y += other.y;
+    }
+};
+
+template<> struct std::hash<point> {
+    size_t operator()(const point& p) const {
+        size_t seed = 0;
+        boost::hash_combine(seed, p.x);
+        boost::hash_combine(seed, p.y);
+        return seed;
     }
 };
 
@@ -51,7 +62,7 @@ struct map {
         return p.x >= 0 && p.y >= 0 && p.x < width && p.y < height;
     }
 
-    auto propagate(const flat_set<point>& to_check, flat_set<point>& result, bool is_part1) {
+    auto propagate(const set<point>& to_check, set<point>& result, bool is_part1) {
         result.clear();
         point offsets[4] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         for (auto p : to_check) {
@@ -88,8 +99,8 @@ auto main(int argc, char** argv) -> int {
         : (is_demo ? 500 : (width / 2 + width * 2));
 
     auto start = m.find_start();
-    flat_set<point> curr = {start};
-    flat_set<point> scratch;
+    set<point> curr = {start};
+    set<point> scratch;
     for (auto i = 0; i < stop_on; i++) {
         m.propagate(curr, scratch, is_part1);
         std::swap(curr, scratch);
