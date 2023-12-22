@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: checker/build/checker
-          key: ${{ runner.os }}-${{ hashFiles('checker/Cargo.*') }}-${{ hashFiles('checker/src/*') }}
+          key: c-${{ runner.os }}-${{ hashFiles('checker/Cargo.*') }}-${{ hashFiles('checker/src/*') }}
       - name: Check tasks
         run: |
           echo $AOC_INPUTS_PASSPHRASE > .inputs-passphrase
