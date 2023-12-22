@@ -62,6 +62,8 @@
           # Day 19
           ghc
           cabal-install
+          # Day 20
+          gnu-smalltalk
         ];
         shellHook = ''
         # Why did you name your language the same as one of the coreutils.
