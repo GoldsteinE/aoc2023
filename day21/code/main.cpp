@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <iostream>
+#include <stdexcept>
 #include <boost/container/flat_set.hpp>
 
 using boost::container::flat_set;
@@ -39,7 +40,7 @@ struct map {
                 if ((*this)[{x, y}] == 'S') return {x, y};
             }
         }
-        throw "tough luck";
+        throw std::logic_error{"tough luck"};
     }
 
     point effective_location(point p) {
