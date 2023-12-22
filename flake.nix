@@ -64,15 +64,17 @@
           cabal-install
           # Day 20
           gnu-smalltalk
+          # Day 21
+          boost.dev
         ];
         shellHook = ''
-        # Why did you name your language the same as one of the coreutils.
-        export PATH="${pkgs.factor-lang}/bin:$PATH"
-        # To work with Factor code.
-        export FACTOR_ROOTS="$(pwd)/day18/code";
+          # Why did you name your language the same as one of the coreutils.
+          export PATH="${pkgs.factor-lang}/bin:$PATH"
+          # To work with Factor code.
+          export FACTOR_ROOTS="$(pwd)/day18/code";
         '';
         # For scripts.
-        FACTOR_BIN="${pkgs.factor-lang}/bin/factor";
+        FACTOR_BIN = "${pkgs.factor-lang}/bin/factor";
       };
     }
   );
