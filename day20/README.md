@@ -8,4 +8,4 @@ half-broken binary counters and product (actually LCM, but they’re coprime any
 (Part of) visualization is included below, but the code I used to generate it is not, since it’s not in Smalltalk.
 I’ve done it by basically generating a lot of `.dot` files, graphvizing them all and ffmpeging thousands of PNGs into a video.
 
-![A visualization of modules graph](visualization.mp4)
+[visualization.webm](https://github.com/GoldsteinE/aoc2023/assets/12019211/da04b730-d1f0-4d5a-9b33-8f6561b9e59c)
