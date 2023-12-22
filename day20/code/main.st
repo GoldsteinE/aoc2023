@@ -99,8 +99,6 @@ Module subclass: Conjunction [
         lastPulse do: [:value|
             high := high & (value = 'high')
         ].
-        "lastPulse inspect."
-        "high inspect."
         ^self broadcast: (high ifTrue: [ 'low' ] ifFalse: [ 'high' ]).
     ]
 ]
@@ -184,7 +182,6 @@ System extend [
         todo add: (Signal fromPulse: 'low' sender: 'button' receiver: 'broadcaster').
         [ (todo size) ~= 0 ] whileTrue: [
             signal := todo removeFirst.
-            "signal inspect."
             ((signal pulse) = 'low') ifTrue: [
                 low := low + 1.
             ] ifFalse: [
