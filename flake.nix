@@ -66,6 +66,8 @@
           gnu-smalltalk
           # Day 21
           boost.dev
+          # Day 22
+          scala_3
         ];
         shellHook = ''
           # Why did you name your language the same as one of the coreutils.
