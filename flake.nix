@@ -68,6 +68,8 @@
           boost.dev
           # Day 22
           scala_3
+          # Day 23
+          racket
         ];
         shellHook = ''
           # Why did you name your language the same as one of the coreutils.

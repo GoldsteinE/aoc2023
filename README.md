@@ -1,4 +1,4 @@
-# Advent of Code 2023: 22/25 langs
+# Advent of Code 2023: 23/25 langs
 
 I’ll try to solve this Advent of Code using different language for each day.
 Any programs needed to run the code will be available via dev shell in the `flake.nix`.
@@ -29,6 +29,7 @@ Any programs needed to run the code will be available via dev shell in the `flak
 |  20 | GNU Smalltalk            | [`./day20/`](/day20) |
 |  21 | C++                      | [`./day21/`](/day21) |
 |  22 | Scala                    | [`./day22/`](/day22) |
+|  23 | Racket                   | [`./day23/`](/day23) |
 
 ## `check.sh`
 
