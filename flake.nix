@@ -70,6 +70,8 @@
           scala_3
           # Day 23
           racket
+          # Day 24
+          (python311.withPackages (p: with p; [ ipython z3-solver ]))
         ];
         shellHook = ''
           # Why did you name your language the same as one of the coreutils.
