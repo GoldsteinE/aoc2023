@@ -1,7 +1,7 @@
-# Advent of Code 2023: 24/25 langs
+# Advent of Code 2023 solved in 25 languages
 
-I’ll try to solve this Advent of Code using different language for each day.
-Any programs needed to run the code will be available via dev shell in the `flake.nix`.
+I solved this Advent of Code using different language for each day.
+Any programs needed to run the code are available via dev shell in the `flake.nix`.
 
 ## Languages
 
@@ -31,6 +31,7 @@ Any programs needed to run the code will be available via dev shell in the `flak
 |  22 | Scala                    | [`./day22/`](/day22) |
 |  23 | Racket                   | [`./day23/`](/day23) |
 |  24 | Python (+ Z3)            | [`./day24/`](/day24) |
+|  25 | Rust                     | [`./day25/`](/day25) |
 
 ## `check.sh`
 

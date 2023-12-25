@@ -1,0 +1,11 @@
+[package]
+name = "day25"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ahash = "0.8.6"
+color-eyre = "0.6.2"
+rand = "0.8.5"
+rand_xoshiro = "0.6.0"
+rayon = "1.8.0"
